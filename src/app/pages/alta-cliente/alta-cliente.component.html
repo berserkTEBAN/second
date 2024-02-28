@@ -1,0 +1,61 @@
+<h3>{{ edicion ? 'Editar Cliente' : 'Alta Cliente' }}</h3>
+<div class="col-sm-4">
+    <p><label >Nombre Cliente:</label></p>
+    <input type="text" class="form-control" [(ngModel)]="cliente.nombre">
+    <p><label >RFC:</label></p>
+    <input type="text" class="form-control" [(ngModel)]="cliente.rfc">
+    <p><label >Domicilio:</label></p>
+    <input type="text" class="form-control" [(ngModel)]="cliente.domicilio">
+    <p><label >Selecciona el tipo de cliente</label></p>
+    <select [(ngModel)]="cliente.tipoCliente" class="form-control">
+        <option *ngFor="let tipo of tipos" [value]="tipo.id">
+            {{ tipo.descripcion }}
+        </option>
+    </select>
+    <p></p>
+    <p><button type="button" class="btn btn-primary" (click)="insertarEditarCliente()">
+        {{ edicion ? 'Guardar cambios' : 'Insertar' }}
+    </button></p>
+</div>
+
+<h3>Listado de clientes</h3>
+
+<div *ngIf="(clientes$ | async) as clientes; else loading">
+  <!-- Verifica si hay clientes -->
+  <div *ngIf="clientes.length > 0; else noClientes">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id Cliente</th>
+          <th>Nombre</th>
+          <th>RFC</th>
+          <th>Domicilio</th>
+          <th>Tipo de Cliente</th>
+          <th>Acciones</th> <!-- Agregar columna para acciones -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>{{cliente.id}}</td>
+          <td>{{cliente.nombre}}</td>
+          <td>{{cliente.rfc}}</td>
+          <td>{{cliente.domicilio}}</td>
+          <td>{{cliente.tipoCliente}}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="editarCliente(cliente)">Editar</button> <!-- Botón de editar -->
+            <button type="button" class="btn btn-danger" (click)="eliminarCliente(cliente)">Eliminar</button> <!-- Botón de eliminar -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Mensaje cuando no hay clientes -->
+  <ng-template #noClientes>
+    <div>No hay clientes registrados</div>
+  </ng-template>
+</div>
+
+<!-- Mensaje de carga -->
+<ng-template #loading>
+  <div>Cargando clientes...</div>
+</ng-template>
