@@ -4,17 +4,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { AltaClienteComponent } from './pages/alta-cliente/alta-cliente.component';
-import  {AngularFireModule} from '@angular/fire/compat';
-import {AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { HomeComponent } from './pages/home/home.component'; 
+import { LibrosComponent } from '../app/pages/libros/libros.component';
+import { LibroService } from './services/libro.service'; // Importa LibroService aquí
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment.development';
-//import { ListaClientesComponent } from './pages/lista-clientes/lista-clientes.component';
+import { SongsComponent } from './pages/list/songs.component';
+import { UsersService } from './services/users.service';
+import { UploadArtistComponent } from './pages/upload-artist/upload-artist.component';
+import { PrimerComponent } from './pages/primer/primer.component';
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AltaClienteComponent,
-   // ListaClientesComponent
-
+    HomeComponent,
+    LibrosComponent,
+    SongsComponent,
+    UploadArtistComponent,
+    PrimerComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +34,10 @@ import { environment } from '../environments/environment.development';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule
   ],
-  providers: [],
+  providers: [
+    LibroService,
+    UsersService // Agrega LibroService como un proveedor aquí
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
